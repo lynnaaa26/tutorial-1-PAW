@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+
+    <style>
+        /* --- Global Styles --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .nav-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .nav-list li {
+            display: inline-block;
+        }
+        .nav-list a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .nav-list a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .rightNav {
+            display: flex;
+            align-items: center;
+        }
+        .rightNav input {
+            padding: 8px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+        .rightNav button {
+            padding: 8px 12px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .rightNav button:hover {
+            background-color: #777;
+        }
+
+        /* --- Sections --- */
+        .main-content {
+            padding: 20px;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+
+        /* --- Attendance Table --- */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #fefefe;
+        }
+
+        /* --- Add Student Form --- */
+        form {
+            background-color: #fff;
+            padding: 40px 50px;
+            border-radius: 12px;
+            width: 350px;
+            margin: auto;
+        }
+        form label {
+            display: block;
+            margin-top: 10px;
+        }
+        form input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        form button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        form button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><a href="#" onclick="showSection('home')">Home</a></li>
+            <li><a href="#" onclick="showSection('attendance')">Attendance List</a></li>
+            <li><a href="#" onclick="showSection('add-student')">Add Student</a></li>
+            <li><a href="#" onclick="showSection('reports')">Reports</a></li>
+            <li><a href="#" onclick="showSection('logout')">Logout</a></li>
+        </ul>
+        <div class="rightNav">
+            <input type="text" name="search" id="search" placeholder="Search">
+            <button class="btn btn-sm">Search</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Home Section -->
+        <div id="home" class="content-section active">
+            <h1>Welcome to the Attendance System</h1>
+            <p>This is the home page. Use the navigation bar above to explore other sections.</p>
+        </div>
+
+        <!-- Attendance Section -->
+        <div id="attendance" class="content-section">
+            <p><b>STUDENTS TABLE</b></p>
+            <table>
+                <tr>
+                    <th rowspan="2">Student ID</th>
+                    <th rowspan="2">Last Name</th>
+                    <th rowspan="2">First Name</th>
+                    <th rowspan="2">Course</th>
+                    <th colspan="2">Session Date</th>
+                </tr>
+                <tr>
+                    <th>Present</th>
+                    <th>Participated</th>
+                </tr>
+
+                <!-- Example rows -->
+                <tr>
+                    <td>std1</td><td>Oh</td><td>Paw</td><td>Math</td>
+                    <td><button onclick="toggleX(this)"></button></td>
+                    <td><button onclick="toggleX(this)"></button></td>
+                </tr>
+                <tr>
+                    <td>std2</td><td>Kim</td><td>Lee</td><td>Science</td>
+                    <td><button onclick="toggleX(this)"></button></td>
+                    <td><button onclick="toggleX(this)"></button></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Add Student Section -->
+        <div id="add-student" class="content-section">
+            <h2>Add New Student</h2>
+            <form>
+                <label for="studentid">Student ID:</label>
+                <input type="text" id="studentid" required>
+
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" required>
+
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reports" class="content-section">
+            <h2>Reports</h2>
+            <p>Reports will be available here.</p>
+        </div>
+
+        <!-- Logout Section -->
+        <div id="logout" class="content-section">
+            <h2>Logout</h2>
+            <p>You have been logged out.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function toggleX(button) {
+            button.textContent = button.textContent.trim() === "" ? "❌" : "";
+        }
+    </script>
+
+</body>
+</html>
