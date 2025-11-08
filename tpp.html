@@ -6,7 +6,7 @@
     <title>Attendance System</title>
 
     <style>
-        /* --- Global Styles --- */
+        
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -14,7 +14,7 @@
             background-color: #f4f4f4;
         }
 
-        /* --- Navbar --- */
+        /* navbar */
         .navbar {
             background-color: #333;
             overflow: hidden;
@@ -66,7 +66,7 @@
             background-color: #777;
         }
 
-        /* --- Sections --- */
+        /*  sections  */
         .main-content {
             padding: 20px;
         }
@@ -77,7 +77,7 @@
             display: block;
         }
 
-        /* --- Attendance Table --- */
+        /* attendence table */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -91,7 +91,7 @@
             background-color: #fefefe;
         }
 
-        /* --- Add Student Form --- */
+        /*form student*/
         form {
             background-color: #fff;
             padding: 40px 50px;
@@ -122,11 +122,27 @@
         form button:hover {
             background: #0056b3;
         }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: block;
+        }
+        .success {
+            color: green;
+            font-size: 1.1em;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- navbar -->
     <nav class="navbar">
         <ul class="nav-list">
             <li><a href="#" onclick="showSection('home')">Home</a></li>
@@ -141,16 +157,16 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- main content -->
     <div class="main-content">
 
-        <!-- Home Section -->
+        <!-- home section -->
         <div id="home" class="content-section active">
             <h1>Welcome to the Attendance System</h1>
             <p>This is the home page. Use the navigation bar above to explore other sections.</p>
         </div>
 
-        <!-- Attendance Section -->
+        <!-- attendance section -->
         <div id="attendance" class="content-section">
             <p><b>STUDENTS TABLE</b></p>
             <table>
@@ -166,7 +182,7 @@
                     <th>Participated</th>
                 </tr>
 
-                <!-- Example rows -->
+            
                 <tr>
                     <td>std1</td><td>Oh</td><td>Paw</td><td>Math</td>
                     <td><button onclick="toggleX(this)"></button></td>
@@ -180,40 +196,50 @@
             </table>
         </div>
 
-        <!-- Add Student Section -->
+        <!-- add student section -->
         <div id="add-student" class="content-section">
             <h2>Add New Student</h2>
-            <form>
+            <form id="addStudentForm">
                 <label for="studentid">Student ID:</label>
                 <input type="text" id="studentid" required>
+                <span class="error" id="err-studentid"></span>
 
                 <label for="lastname">Last Name:</label>
                 <input type="text" id="lastname" required>
+                <span class="error" id="err-lastname"></span>
 
                 <label for="firstname">First Name:</label>
                 <input type="text" id="firstname" required>
+                <span class="error" id="err-firstname"></span>
+
+                <label for="course">Course:</label>
+                <input type="text" id="course" required>
+                <span class="error" id="err-course"></span>
 
                 <label for="email">Email:</label>
                 <input type="email" id="email" required>
+                <span class="error" id="err-email"></span>
 
                 <button type="submit">Submit</button>
             </form>
+            <div id="successMessage" class="success">Student added successfully!</div>
         </div>
+        
 
-        <!-- Reports Section -->
+        <!-- reports section -->
         <div id="reports" class="content-section">
             <h2>Reports</h2>
             <p>Reports will be available here.</p>
         </div>
 
-        <!-- Logout Section -->
+        <!-- logout section -->
         <div id="logout" class="content-section">
             <h2>Logout</h2>
             <p>You have been logged out.</p>
         </div>
     </div>
 
-    <!-- JavaScript -->
+    
     <script>
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.content-section');
@@ -224,6 +250,76 @@
         function toggleX(button) {
             button.textContent = button.textContent.trim() === "" ? "❌" : "";
         }
+
+        // form validation and submission
+        document.getElementById('addStudentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // clear previous errors and success message
+            const errors = document.querySelectorAll('.error');
+            errors.forEach(err => err.textContent = '');
+            document.getElementById('successMessage').style.display = 'none';
+
+            let isValid = true;
+
+            // Student ID: not empty and only numbers
+            const studentId = document.getElementById('studentid').value.trim();
+            if (!studentId || !/^\d+$/.test(studentId)) {
+                document.getElementById('err-studentid').textContent = 'Student ID must be non-empty and contain only numbers.';
+                isValid = false;
+            }
+
+            // Last Name: only letters
+            const lastName = document.getElementById('lastname').value.trim();
+            if (!lastName || !/^[a-zA-Z]+$/.test(lastName)) {
+                document.getElementById('err-lastname').textContent = 'Last Name must contain only letters.';
+                isValid = false;
+            }
+
+            // First Name: only letters
+            const firstName = document.getElementById('firstname').value.trim();
+            if (!firstName || !/^[a-zA-Z]+$/.test(firstName)) {
+                document.getElementById('err-firstname').textContent = 'First Name must contain only letters.';
+                isValid = false;
+            }
+
+            // Course: not empty
+            const course = document.getElementById('course').value.trim();
+            if (!course) {
+                document.getElementById('err-course').textContent = 'Course must not be empty.';
+                isValid = false;
+            }
+
+            // Email: valid format
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('err-email').textContent = 'Email must follow a valid format (e.g., name@example.com).';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Add new row to table
+                const table = document.querySelector('#attendance table');
+                const newRow = `
+                    <tr>
+                        <td>${studentId}</td>
+                        <td>${lastName}</td>
+                        <td>${firstName}</td>
+                        <td>${course}</td>
+                        <td><button onclick="toggleX(this)"></button></td>
+                        <td><button onclick="toggleX(this)"></button></td>
+                    </tr>
+                `;
+                table.insertAdjacentHTML('beforeend', newRow);
+
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Clear form
+                this.reset();
+            }
+        });
     </script>
 
 </body>
