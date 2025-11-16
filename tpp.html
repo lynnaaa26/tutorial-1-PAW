@@ -5,144 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance System</title>
 
-    <style>
-        
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+    <!-- jquery for search, sorting and other dynamic actions -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
 
-        /* navbar */
-        .navbar {
-            background-color: #333;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        .nav-list {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        .nav-list li {
-            display: inline-block;
-        }
-        .nav-list a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        .nav-list a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .rightNav {
-            display: flex;
-            align-items: center;
-        }
-        .rightNav input {
-            padding: 8px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-        .rightNav button {
-            padding: 8px 12px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .rightNav button:hover {
-            background-color: #777;
-        }
-
-        /*  sections  */
-        .main-content {
-            padding: 20px;
-        }
-        .content-section {
-            display: none;
-        }
-        .content-section.active {
-            display: block;
-        }
-
-        /* attendence table */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #fefefe;
-        }
-
-        /*form student*/
-        form {
-            background-color: #fff;
-            padding: 40px 50px;
-            border-radius: 12px;
-            width: 350px;
-            margin: auto;
-        }
-        form label {
-            display: block;
-            margin-top: 10px;
-        }
-        form input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        form button {
-            width: 100%;
-            margin-top: 15px;
-            padding: 10px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        form button:hover {
-            background: #0056b3;
-        }
-        .error {
-            color: red;
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: block;
-        }
-        .success {
-            color: green;
-            font-size: 1.1em;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            border-radius: 5px;
-            display: none;
-        }
-    </style>
+    <!-- linking main css file so layout and colors load correctly -->
+    <link rel="stylesheet" href="tpp.css">
 </head>
 <body>
 
-    <!-- navbar -->
+    <!-- navbar that controls which section is shown -->
     <nav class="navbar">
         <ul class="nav-list">
             <li><a href="#" onclick="showSection('home')">Home</a></li>
@@ -151,54 +24,213 @@
             <li><a href="#" onclick="showSection('reports')">Reports</a></li>
             <li><a href="#" onclick="showSection('logout')">Logout</a></li>
         </ul>
+
         <div class="rightNav">
+            <!-- search bar that will be used later for instant filtering -->
             <input type="text" name="search" id="search" placeholder="Search">
             <button class="btn btn-sm">Search</button>
         </div>
     </nav>
 
-    <!-- main content -->
+    <!-- container that holds all page sections -->
     <div class="main-content">
 
-        <!-- home section -->
-        <div id="home" class="content-section active">
+        <!-- default visible page when site loads -->
+        <div id="home" class="content-section active ">
             <h1>Welcome to the Attendance System</h1>
             <p>This is the home page. Use the navigation bar above to explore other sections.</p>
         </div>
 
-        <!-- attendance section -->
-        <div id="attendance" class="content-section">
-            <p><b>STUDENTS TABLE</b></p>
-            <table>
+        <!-- table where each student's presence is marked -->
+        <div id="attendance" class="content-section"> 
+            <p>SUDENTS TABLE</p>
+
+            <!-- search specifically for student names inside the table -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <label for="searchName">Search by Name:</label>
+                <input type="text" id="searchName" placeholder="Enter last or first name..." style="padding: 8px; margin-left: 10px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+
+            <!-- main attendance table -->
+            <table id="attendanceTable">
                 <tr>
-                    <th rowspan="2">Student ID</th>
-                    <th rowspan="2">Last Name</th>
-                    <th rowspan="2">First Name</th>
-                    <th rowspan="2">Course</th>
-                    <th colspan="2">Session Date</th>
-                </tr>
-                <tr>
-                    <th>Present</th>
-                    <th>Participated</th>
+                    <th rowspan="2"> Last Name </th>
+                    <th rowspan="2"> First Name </th>
+                    <th colspan="2"> S1 </th>
+                    <th colspan="2"> S2 </th>
+                    <th colspan="2"> S3 </th>
+                    <th colspan="2"> S4 </th>
+                    <th colspan="2"> S5 </th>
+                    <th colspan="2"> S6 </th>
+                    <th rowspan="2"> Absences</th>
+                    <th rowspan="2"> Participation</th>
+                    <th rowspan="2"> Message </th>
                 </tr>
 
-            
+                <!-- headers for presence (P) and participation (Pa) -->
                 <tr>
-                    <td>std1</td><td>Oh</td><td>Paw</td><td>Math</td>
-                    <td><button onclick="toggleX(this)"></button></td>
-                    <td><button onclick="toggleX(this)"></button></td>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
                 </tr>
+
+                <!-- each row below represents one student -->
                 <tr>
-                    <td>std2</td><td>Kim</td><td>Lee</td><td>Science</td>
-                    <td><button onclick="toggleX(this)"></button></td>
-                    <td><button onclick="toggleX(this)"></button></td>
+                    <td> A </td>
+                    <td> Sara</td>
+
+                    <!-- each button toggles X for presence -->
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> x Abs</td>
+                    <td> y Par </td>
+                    <td> </td>
+                </tr>
+
+                <tr>
+                    <td> Y </td>
+                    <td> Lyna</td>
+
+                    <!-- presence buttons for second student -->
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> x Abs</td>
+                    <td> y Par </td>
+                    <td> </td>
+                </tr>
+
+                <tr>
+                    <td> H </td>
+                    <td> Rania</td>
+
+                    <!-- presence buttons for third student -->
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> x Abs</td>
+                    <td> y Par </td>
+                    <td> </td>
                 </tr>
             </table>
+
+            <!-- button that shows the generated report below -->
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="showReportBtn" class="btn btn-md" onclick="generateReport()">Show Report</button>
+            </div>
+
+            <!-- highlights best performing students -->
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="highlightExcellentBtn" class="btn btn-md" style="background-color: #28a745; margin-right: 10px;">
+                    Highlight Excellent Students
+                </button>
+
+                <!-- resets all highlights back to normal -->
+                <button id="resetColorsBtn" class="btn btn-md" style="background-color: #dc3545;">
+                    Reset Colors
+                </button>
+            </div>
+
+            <!-- sorting controls for absences and participation -->
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="sortAbsAscBtn" class="btn btn-md" style="background-color: #17a2b8; margin-right: 10px;">
+                    Sort by Absences (Ascending)
+                </button>
+                <button id="sortPartDescBtn" class="btn btn-md" style="background-color: #6f42c1;">
+                    Sort by Participation (Descending)
+                </button>
+            </div>
+
+            <!-- small text to show which sorting is applied -->
+            <div id="sortMessage" style="text-align: center; margin-top: 10px; font-weight: bold; color: #555; font-size: 14px;"></div>
+
+            <!-- report section hidden until user clicks show report -->
+            <div id="reportSection" style="display: none; margin-top: 30px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h2>Attendance Report</h2>
+
+                <!-- these will be filled dynamically from javascript -->
+                <p id="totalStudents"></p>
+                <p id="totalPresent"></p>
+                <p id="totalParticipated"></p>
+
+                <!-- simple bar chart showing summary values -->
+                <div id="reportChart" style="margin-top: 20px;">
+                    <h3>Summary Chart</h3>
+
+                    <div style="display: flex; justify-content: space-around; align-items: flex-end; height: 200px; border-bottom: 2px solid #ddd; border-left: 2px solid #ddd;">
+                        <div class="chart-bar" id="totalStudentsBar" style="width: 60px; background-color: #63A361; height: 0px; display: flex; align-items: flex-end; justify-content: center; color: white; font-weight: bold;"></div>
+                        <div class="chart-bar" id="totalPresentBar" style="width: 60px; background-color: #007bff; height: 0px; display: flex; align-items: flex-end; justify-content: center; color: white; font-weight: bold;"></div>
+                        <div class="chart-bar" id="totalParticipatedBar" style="width: 60px; background-color: #FF6B6B; height: 0px; display: flex; align-items: flex-end; justify-content: center; color: white; font-weight: bold;"></div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-around; margin-top: 5px;">
+                        <span>Total Students</span>
+                        <span>Total Present</span>
+                        <span>Total Participated</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- add student section -->
+        <!-- form used to add new students to the system -->
         <div id="add-student" class="content-section">
             <h2>Add New Student</h2>
+
             <form id="addStudentForm">
                 <label for="studentid">Student ID:</label>
                 <input type="text" id="studentid" required>
@@ -220,19 +252,21 @@
                 <input type="email" id="email" required>
                 <span class="error" id="err-email"></span>
 
+                <!-- submission button for adding student -->
                 <button type="submit">Submit</button>
             </form>
+
+            <!-- shows up only when the form submission succeeds -->
             <div id="successMessage" class="success">Student added successfully!</div>
         </div>
-        
 
-        <!-- reports section -->
+        <!-- section reserved for future report details -->
         <div id="reports" class="content-section">
             <h2>Reports</h2>
             <p>Reports will be available here.</p>
         </div>
 
-        <!-- logout section -->
+        <!-- simple logout message for the user -->
         <div id="logout" class="content-section">
             <h2>Logout</h2>
             <p>You have been logged out.</p>
@@ -240,87 +274,6 @@
     </div>
 
     
-    <script>
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        function toggleX(button) {
-            button.textContent = button.textContent.trim() === "" ? "❌" : "";
-        }
-
-        // form validation and submission
-        document.getElementById('addStudentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // clear previous errors and success message
-            const errors = document.querySelectorAll('.error');
-            errors.forEach(err => err.textContent = '');
-            document.getElementById('successMessage').style.display = 'none';
-
-            let isValid = true;
-
-            // Student ID: not empty and only numbers
-            const studentId = document.getElementById('studentid').value.trim();
-            if (!studentId || !/^\d+$/.test(studentId)) {
-                document.getElementById('err-studentid').textContent = 'Student ID must be non-empty and contain only numbers.';
-                isValid = false;
-            }
-
-            // Last Name: only letters
-            const lastName = document.getElementById('lastname').value.trim();
-            if (!lastName || !/^[a-zA-Z]+$/.test(lastName)) {
-                document.getElementById('err-lastname').textContent = 'Last Name must contain only letters.';
-                isValid = false;
-            }
-
-            // First Name: only letters
-            const firstName = document.getElementById('firstname').value.trim();
-            if (!firstName || !/^[a-zA-Z]+$/.test(firstName)) {
-                document.getElementById('err-firstname').textContent = 'First Name must contain only letters.';
-                isValid = false;
-            }
-
-            // Course: not empty
-            const course = document.getElementById('course').value.trim();
-            if (!course) {
-                document.getElementById('err-course').textContent = 'Course must not be empty.';
-                isValid = false;
-            }
-
-            // Email: valid format
-            const email = document.getElementById('email').value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email || !emailRegex.test(email)) {
-                document.getElementById('err-email').textContent = 'Email must follow a valid format (e.g., name@example.com).';
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Add new row to table
-                const table = document.querySelector('#attendance table');
-                const newRow = `
-                    <tr>
-                        <td>${studentId}</td>
-                        <td>${lastName}</td>
-                        <td>${firstName}</td>
-                        <td>${course}</td>
-                        <td><button onclick="toggleX(this)"></button></td>
-                        <td><button onclick="toggleX(this)"></button></td>
-                    </tr>
-                `;
-                table.insertAdjacentHTML('beforeend', newRow);
-
-                // Show success message
-                document.getElementById('successMessage').style.display = 'block';
-
-                // Clear form
-                this.reset();
-            }
-        });
-    </script>
-
+    <script src="tpp.js"></script>
 </body>
 </html>
