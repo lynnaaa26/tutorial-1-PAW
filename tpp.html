@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+
+    <!-- jquery for search, sorting and other dynamic actions -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+
+    <!-- linking main css file so layout and colors load correctly -->
+    <link rel="stylesheet" href="tpp.css">
+</head>
+<body>
+
+    <!-- navbar that controls which section is shown -->
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><a href="#" onclick="showSection('home')">Home</a></li>
+            <li><a href="#" onclick="showSection('attendance')">Attendance List</a></li>
+            <li><a href="#" onclick="showSection('add-student')">Add Student</a></li>
+            <li><a href="#" onclick="showSection('reports')">Reports</a></li>
+            <li><a href="#" onclick="showSection('logout')">Logout</a></li>
+        </ul>
+
+        <div class="rightNav">
+            <!-- search bar that will be used later for instant filtering -->
+            <input type="text" name="search" id="search" placeholder="Search">
+            <button class="btn btn-sm">Search</button>
+        </div>
+    </nav>
+
+    <!-- container that holds all page sections -->
+    <div class="main-content">
+
+        <!-- default visible page when site loads -->
+        <div id="home" class="content-section active ">
+            <h1>Welcome to the Attendance System</h1>
+            <p>This is the home page. Use the navigation bar above to explore other sections.</p>
+        </div>
+
+        <!-- table where each student's presence is marked -->
+        <div id="attendance" class="content-section"> 
+            <p>SUDENTS TABLE</p>
+
+            <!-- search specifically for student names inside the table -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <label for="searchName">Search by Name:</label>
+                <input type="text" id="searchName" placeholder="Enter last or first name..." style="padding: 8px; margin-left: 10px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+
+            <!-- main attendance table -->
+            <table id="attendanceTable">
+                <tr>
+                    <th rowspan="2"> Last Name </th>
+                    <th rowspan="2"> First Name </th>
+                    <th colspan="2"> S1 </th>
+                    <th colspan="2"> S2 </th>
+                    <th colspan="2"> S3 </th>
+                    <th colspan="2"> S4 </th>
+                    <th colspan="2"> S5 </th>
+                    <th colspan="2"> S6 </th>
+                    <th rowspan="2"> Absences</th>
+                    <th rowspan="2"> Participation</th>
+                    <th rowspan="2"> Message </th>
+                </tr>
+
+                <!-- headers for presence (P) and participation (Pa) -->
+                <tr>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                    <th>P </th>
+                    <th>Pa </th>
+                </tr>
+
+                <!-- each row below represents one student -->
+                <tr>
+                    <td> A </td>
+                    <td> Sara</td>
+
+                    <!-- each button toggles X for presence -->
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> x Abs</td>
+                    <td> y Par </td>
+                    <td> </td>
+                </tr>
+
+                <tr>
+                    <td> Y </td>
+                    <td> Lyna</td>
+
+                    <!-- presence buttons for second student -->
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> x Abs</td>
+                    <td> y Par </td>
+                    <td> </td>
+                </tr>
+
+                <tr>
+                    <td> H </td>
+                    <td> Rania</td>
+
+                    <!-- presence buttons for third student -->
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> <button onclick="toggleX(this)"> </button> </td>
+                    <td><button onclick="toggleX(this)"> </button> </td>
+
+                    <td> x Abs</td>
+                    <td> y Par </td>
+                    <td> </td>
+                </tr>
+            </table>
+
+            <!-- button that shows the generated report below -->
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="showReportBtn" class="btn btn-md" onclick="generateReport()">Show Report</button>
+            </div>
+
+            <!-- highlights best performing students -->
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="highlightExcellentBtn" class="btn btn-md" style="background-color: #28a745; margin-right: 10px;">
+                    Highlight Excellent Students
+                </button>
+
+                <!-- resets all highlights back to normal -->
+                <button id="resetColorsBtn" class="btn btn-md" style="background-color: #dc3545;">
+                    Reset Colors
+                </button>
+            </div>
+
+            <!-- sorting controls for absences and participation -->
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="sortAbsAscBtn" class="btn btn-md" style="background-color: #17a2b8; margin-right: 10px;">
+                    Sort by Absences (Ascending)
+                </button>
+                <button id="sortPartDescBtn" class="btn btn-md" style="background-color: #6f42c1;">
+                    Sort by Participation (Descending)
+                </button>
+            </div>
+
+            <!-- small text to show which sorting is applied -->
+            <div id="sortMessage" style="text-align: center; margin-top: 10px; font-weight: bold; color: #555; font-size: 14px;"></div>
+
+            <!-- report section hidden until user clicks show report -->
+            <div id="reportSection" style="display: none; margin-top: 30px; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h2>Attendance Report</h2>
+
+                <!-- these will be filled dynamically from javascript -->
+                <p id="totalStudents"></p>
+                <p id="totalPresent"></p>
+                <p id="totalParticipated"></p>
+
+                <!-- simple bar chart showing summary values -->
+                <div id="reportChart" style="margin-top: 20px;">
+                    <h3>Summary Chart</h3>
+
+                    <div style="display: flex; justify-content: space-around; align-items: flex-end; height: 200px; border-bottom: 2px solid #ddd; border-left: 2px solid #ddd;">
+                        <div class="chart-bar" id="totalStudentsBar" style="width: 60px; background-color: #63A361; height: 0px; display: flex; align-items: flex-end; justify-content: center; color: white; font-weight: bold;"></div>
+                        <div class="chart-bar" id="totalPresentBar" style="width: 60px; background-color: #007bff; height: 0px; display: flex; align-items: flex-end; justify-content: center; color: white; font-weight: bold;"></div>
+                        <div class="chart-bar" id="totalParticipatedBar" style="width: 60px; background-color: #FF6B6B; height: 0px; display: flex; align-items: flex-end; justify-content: center; color: white; font-weight: bold;"></div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-around; margin-top: 5px;">
+                        <span>Total Students</span>
+                        <span>Total Present</span>
+                        <span>Total Participated</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- form used to add new students to the system -->
+        <div id="add-student" class="content-section">
+            <h2>Add New Student</h2>
+
+            <form id="addStudentForm">
+                <label for="studentid">Student ID:</label>
+                <input type="text" id="studentid" required>
+                <span class="error" id="err-studentid"></span>
+
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" required>
+                <span class="error" id="err-lastname"></span>
+
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" required>
+                <span class="error" id="err-firstname"></span>
+
+                <label for="course">Course:</label>
+                <input type="text" id="course" required>
+                <span class="error" id="err-course"></span>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <span class="error" id="err-email"></span>
+
+                <!-- submission button for adding student -->
+                <button type="submit">Submit</button>
+            </form>
+
+            <!-- shows up only when the form submission succeeds -->
+            <div id="successMessage" class="success">Student added successfully!</div>
+        </div>
+
+        <!-- section reserved for future report details -->
+        <div id="reports" class="content-section">
+            <h2>Reports</h2>
+            <p>Reports will be available here.</p>
+        </div>
+
+        <!-- simple logout message for the user -->
+        <div id="logout" class="content-section">
+            <h2>Logout</h2>
+            <p>You have been logged out.</p>
+        </div>
+    </div>
+
+    
+    <script src="tpp.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+/* navbar */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.nav-list li {
+    display: inline-block;
+}
+.nav-list a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.nav-list a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.rightNav {
+    display: flex;
+    align-items: center;
+}
+.rightNav input {
+    padding: 8px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+}
+.rightNav button {
+    padding: 8px 12px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.rightNav button:hover {
+    background-color: #777;
+}
+
+/* sections */
+.main-content {
+    padding: 20px;
+}
+.content-section {
+    display: none;
+}
+.content-section.active {
+    display: block;
+}
+
+/* attendance table */
+p {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-shadow: 0 2px 10px rgb(0, 0, 0, 0.1);
+    background-color: white;
+}
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+th {
+    background-color: #63A361;
+    color: white;
+    font-weight: bold;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* form student */
+form {
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 12px;
+    width: 350px;
+    margin: auto;
+}
+form label {
+    display: block;
+    margin-top: 10px;
+}
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+form button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+form button:hover {
+    background: #0056b3;
+}
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+.success {
+    color: green;
+    font-size: 1.1em;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    display: none;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.btn:hover {
+    background-color: #0056b3;
+}
+.btn-sm {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+.btn-md {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+/* Report text */
+#reportSection p {
+    font-size: 18px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Chart bars */
+.chart-bar {
+    transition: height 0.5s ease-in-out;
+    min-height: 20px;
+}
+
+/* Exercise 5: Hover highlight (more obvious bright blue) */
+#attendanceTable tr.hover {
+    background-color: #4fc3f7 !important; /* Brighter cyan-blue for obvious hover */
+   
+    box-shadow: 0 0 15px rgba(79, 195, 247, 0.6);
+}
+
+/* Exercise 6: Excellent highlight (more obvious bright green) */
+#attendanceTable tr.excellent-highlight {
+    background-color: #4caf50 !important; /* Brighter green for excellent students */
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); /* Stronger glow */
+    border: 2px solid #2e7d32; /* Dark green border for outline */
+}
+
+/* Row colors from updateRow (more obvious/vivid) */
+#attendanceTable tr[style*="background-color: #B4DEBD"] {
+    background-color: #4caf50 !important; /* Vivid green for <3 absences */
+}
+#attendanceTable tr[style*="background-color: #FFFD8F"] {
+    background-color: #ffeb3b !important; /* Brighter yellow for 3-4 absences */
+}
+#attendanceTable tr[style*="background-color: #BF092F"] {
+    background-color: #f44336 !important; /* Brighter red for >4 absences */
+}
+
+/* Smooth transitions for animations */
+#attendanceTable tr {
+    transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
+}
