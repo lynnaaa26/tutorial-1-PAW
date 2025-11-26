@@ -4,5 +4,5 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root'); 
 define('DB_PASS', '');        // <-- LEAVE THIS EMPTY STRING for default WAMP setup
-define('DB_NAME', 'mydb'); 
+define('DB_NAME', 'project'); 
 ?>
